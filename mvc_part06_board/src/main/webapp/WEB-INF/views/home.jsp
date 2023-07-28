@@ -11,8 +11,3 @@
 	<a href="board/listPage">paging 글 목록</a>
 </body>
 </html>
-
-
-
-
-

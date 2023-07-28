@@ -30,8 +30,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM tbl_board
 	</select>
 	
+	<select id="listCri" resultType="boardVO" parameterType="cri">
+		SELECT * FROM tbl_board ORDER BY bno DESC LIMIT #{startRow},#{perPageNum}
+	</select> 
+
+	
 	<select id="totalCount" resultType="int">
-		SELECT count(*) FROM tbl_board
+		SELECT count(*) FROM tbl_board 
 	</select>
 </mapper>
 

@@ -60,8 +60,9 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
-
-		return null;
+		int startRow = cri.getStartRow();
+		List<BoardVO> list = session.selectList("boardMapper.listCri",cri);
+		return list;
 	}
 
 }

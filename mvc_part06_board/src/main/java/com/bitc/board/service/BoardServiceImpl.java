@@ -1,6 +1,5 @@
 package com.bitc.board.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,12 +19,11 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public String regist(BoardVO board) throws Exception {
-		String message = "글 작성 실패";
 		int result = dao.create(board);
 		if(result > 0) {
-			message = "글 작성 완료"; 
+			return "redirect:/board/listPage"; 
 		}
-		return message;
+		return "redirect:/board/register";
 	}
 
 	@Override
@@ -57,20 +55,25 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public String remove(int bno) throws Exception {
 		int result = dao.delete(bno);
-		
 		return "redirect:/board/listPage";
 	}
 
 	@Override
 	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
-
-		return null;
+		PageMaker pm = new PageMaker();
+		pm.setCri(new Criteria());
+		pm.setTotalCount(dao.totalCount());
+		
+		return dao.listCriteria(cri);
 	}
 
 	@Override
 	public PageMaker getPageMaker(Criteria cri) throws Exception {
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		pm.setTotalCount(dao.totalCount());
 		
-		return null;
+		return pm;
 	}
 
 }

@@ -45,7 +45,7 @@ public class PageMaker {
 		}
 		
 		first = (cri.getPage() != 1) ? true : false;
-		last = (cri.getPage() != maxPage) ? true : false;
+		last = (cri.getPage() != maxPage && cri.getPage() > this.displayPageNum) ? true : false;
 		prev = (startPage != 1) ? true : false;
 		next = (endPage == maxPage) ? false : true;
 	}
@@ -73,7 +73,6 @@ public class PageMaker {
 			  .queryParam("perPageNum", cri.getPerPageNum())
 			  .build();
 		String query = uriComponents.toUriString();
-		System.out.println(query);
 		return query;
 	}
 	

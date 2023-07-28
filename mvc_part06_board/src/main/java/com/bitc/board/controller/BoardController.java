@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitc.board.service.BoardService;
+import com.bitc.board.util.Criteria;
 import com.bitc.board.vo.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -19,17 +20,12 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService bs;
-	BoardVO vo;
 	
 	/* "게시글 작성 페이지 요청" */
 	// @RequestMapping(value="/register",method=RequestMethod.GET)
 	@GetMapping("board/register")
 	public String register()throws Exception{
-		// /board/register
-		// WEB-INF/views/board/register.jsp
 		System.out.println("게시글 작성 페이지 요청");
-		vo = new BoardVO();
-		
 		return "board/register";
 	}
 	
@@ -39,11 +35,8 @@ public class BoardController {
 	 */
 	@PostMapping("board/register")
 	public String register(String title,String content,String writer,BoardVO vo,HttpSession session) throws Exception {
-		String message = bs.regist(vo);
-		session.setAttribute("message",message);
-		return "board/listPage";
+		return bs.regist(vo);
 	}
-	
 	
 	/**
 	 * 게시글 상세보기 요청 처리 - 게시글 번호
@@ -51,14 +44,11 @@ public class BoardController {
 	 */
 	@GetMapping("board/read")
 	public String read(@RequestParam("bno") int bno, Model model) throws Exception {
-	    System.out.println("게시글 상세 페이지 요청 - bno: " + bno);
-	    
-	    BoardVO board = bs.read(bno);
 	    bs.updateCnt(bno);
-	    model.addAttribute("boardVO", board);
-
+	    model.addAttribute("boardVO", bs.read(bno));
 	    return "board/read";
 	}
+	
 	/**
 	 * 게시글 수정 페이지 요청
 	 * - 게시글 수정 화면 출력 
@@ -66,10 +56,7 @@ public class BoardController {
 	 */
 	@GetMapping("board/modify")
 	public String modify(int bno, Model model) throws Exception {
-		
-		BoardVO board = bs.read(bno);
-		model.addAttribute("boardVO", board);
-		
+		model.addAttribute("boardVO", bs.read(bno));
 		return "board/modify";
 	}
 	
@@ -100,14 +87,15 @@ public class BoardController {
 	// board/listPage
 	@GetMapping("board/listPage")
 	public String listPage(HttpSession session,HttpServletRequest request) throws Exception {
-		if(request.getParameter("page") == null) {
-			session.setAttribute("list",bs.listAll());			
-		}else {
-			/*
-			 * session.setAttribute("list", bs.listCriteria(cri));
-			 * session.setAttribute("page", );
-			 */
+		Criteria cri = new Criteria();
+
+		if(request.getParameter("page") != null) {
+			cri.setPage(Integer.valueOf(request.getParameter("page")));
 		}
+
+		session.setAttribute("pm", bs.getPageMaker(cri));
+		session.setAttribute("list", bs.listCriteria(cri));
+		
 		return "board/listPage";
 	}
 	
