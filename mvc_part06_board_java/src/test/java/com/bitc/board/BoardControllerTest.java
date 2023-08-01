@@ -1,5 +1,6 @@
 package com.bitc.board;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

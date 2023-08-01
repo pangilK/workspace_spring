@@ -20,7 +20,7 @@ implements WebMvcConfigurer{ 	// 추가 해주면 설정을 편하게 할 수 �
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.jsp("/WEB-INF/views",".jsp");
+		registry.jsp("/WEB-INF/views/",".jsp");
 	} 
 	
 	/*
