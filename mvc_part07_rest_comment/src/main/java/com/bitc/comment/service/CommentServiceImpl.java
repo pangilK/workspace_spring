@@ -36,26 +36,25 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public String updateComment(CommentVO vo) throws Exception {
-
-		return null;
+		return getResult(dao.update(vo));
 	}
 
 	@Override
-	public String deleteComment(CommentVO vo) throws Exception {
-
-		return null;
+	public String deleteComment(int cno) throws Exception {
+		return getResult(dao.delete(cno));
 	}
 
 	@Override
 	public List<CommentVO> commentListPage(int bno, Criteria cri) throws Exception {
-
-		return null;
+		return dao.listPage(bno, cri);
 	}
 
 	@Override
 	public PageMaker getPageMaker(int bno, Criteria cri) throws Exception {
-
-		return null;
+		int totalCount = dao.totalCount(bno);
+		PageMaker pm = new PageMaker(cri,totalCount);
+		pm.setDisplayPageNum(5);
+		return pm;
 	}
 
 }

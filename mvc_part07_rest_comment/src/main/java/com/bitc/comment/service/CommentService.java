@@ -26,7 +26,7 @@ public interface CommentService {
 	/**
 	 * 댓글 삭제
 	 */
-	String deleteComment(CommentVO vo)throws Exception;
+	String deleteComment(int cno)throws Exception;
 	
 	/**
 	 * 페이징 처리된 댓글 리스트
