@@ -22,8 +22,8 @@ public class MediaUtils {
 	}
 	
 	/**
-	 * @param - 업로드 된 파일 확장자 명
-	 * @return
+	 * @param - 업로드된 파일 확장자 명
+	 * @return - key 값이 확장자랑 일치하는 MedeaType 반환
 	 */
 	public static MediaType getMediaType(String ext) {
 		return mediaMap.get(ext.toUpperCase());

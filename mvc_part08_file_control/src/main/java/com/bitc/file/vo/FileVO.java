@@ -13,4 +13,5 @@ public class FileVO {
 	private String content;
 	private List<MultipartFile> files;
 	private MultipartFile file;
+
 }
